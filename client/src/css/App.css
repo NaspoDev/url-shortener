@@ -1,0 +1,23 @@
+.App {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.App .title-area {
+  height: auto;
+  margin-top: 200px;
+}
+.App .title-area .title {
+  padding-bottom: 10px;
+}
+.App .shortener-form {
+  margin-top: 100px;
+  width: 500px;
+  height: auto;
+}
+.App .shortener-form #url-input {
+  margin-bottom: 15px;
+}
