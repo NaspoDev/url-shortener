@@ -1,0 +1,8 @@
+.URLForm {
+  margin-top: 100px;
+  width: 500px;
+  height: auto;
+}
+.URLForm #url-input {
+  margin-bottom: 15px;
+}

@@ -1,7 +1,11 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import "./css/App.css";
+import URLForm from "./components/url_form/URLForm";
+import ResultDisplay from "./components/result_display/ResultDisplay";
 
 function App() {
+  const [submitted, setSubmitted] = useState(false);
+
   return (
     <div className="App has-background-dark">
       <div className="title-area">
@@ -9,35 +13,42 @@ function App() {
         <h2 className="subtitle">Shorten any url you want!</h2>
       </div>
 
-      <form action="" className="shortener-form" onSubmit={handleFormSubmit}>
-        <label htmlFor="url-input" className="label">
-          Long URL
-        </label>
-        <input
-          type="text"
-          id="url-input"
-          className="input"
-          placeholder="Enter the url you want to shorten."
-        />
-        <button className="button is-primary" type="submit">
-          Shorten
-        </button>
-      </form>
+      {/* If form is not submitted, display the form, otherwise display result */}
+      {!submitted ? (
+        <URLForm handleFormSubmit={handleFormSubmit} />
+      ) : (
+        <ResultDisplay />
+      )}
     </div>
   );
 
-  function handleFormSubmit(event: FormEvent): void {
+  // prettier-ignore
+  function handleFormSubmit(event: FormEvent, inputField: HTMLInputElement): void {
     // Prevent the form from refreshing the page on submit.
     event.preventDefault();
 
-    const inputField = document.getElementById("url-input") as HTMLInputElement;
+    const inputValue: string = inputField.value;
 
     // if the input field is empty return.
-    if (inputField.value.trim().length == 0) {
+    if (inputValue.trim().length == 0) {
       return;
     }
 
-    // TODO: submit url to backend (would i validate url here or in the backend?)
+    // If its a valid URL, send it to the server.
+    if (isValidURL(inputValue)) {
+      setSubmitted(true);
+      // TODO: implement logic...
+    }
+  }
+
+  // Checks if the provided value is a valid URL.
+  function isValidURL(url: string): boolean {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
 

@@ -13,11 +13,3 @@
 .App .title-area .title {
   padding-bottom: 10px;
 }
-.App .shortener-form {
-  margin-top: 100px;
-  width: 500px;
-  height: auto;
-}
-.App .shortener-form #url-input {
-  margin-bottom: 15px;
-}
