@@ -4,7 +4,7 @@ import java.util.Stack;
 
 // Handles conversion from base-10 to base-62;
 public class Base62Converter {
-    private final char[] BASE_62_CHARS = {
+    private static final char[] BASE_62_CHARS = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
@@ -15,7 +15,7 @@ public class Base62Converter {
     };
 
     @SuppressWarnings("ExtractMethodRecommender")
-    public String convertToBase62(int base10Value) {
+    public static String convertToBase62(int base10Value) {
         // If the base-10 value is less than 62, return the
         // direct base-62 equivalent.
         if (base10Value < 62) {
