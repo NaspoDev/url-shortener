@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import "./css/App.css";
 import URLForm from "./components/url_form/URLForm";
-import ResultDisplay from "./components/result_display/ResultDisplay";
+import ResultCard from "./components/result_display/ResultCard";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
@@ -17,7 +17,7 @@ function App() {
       {!submitted ? (
         <URLForm handleFormSubmit={handleFormSubmit} />
       ) : (
-        <ResultDisplay />
+        <ResultCard />
       )}
     </div>
   );
