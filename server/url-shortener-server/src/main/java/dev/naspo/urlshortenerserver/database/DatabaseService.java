@@ -1,16 +1,18 @@
 package dev.naspo.urlshortenerserver.database;
 
+import jakarta.annotation.PreDestroy;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-// Handles database connection. Singleton class.
-public class DatabaseConnection {
-    private static DatabaseConnection instance;
+// Handles database connection.
+@Service
+public class DatabaseService {
     // Database connection information.
     private String databaseHost;
     private String databasePort;
@@ -24,7 +26,7 @@ public class DatabaseConnection {
     private Connection conn; // Our database connection object.
     private DSLContext dslContext; // Data
 
-    private DatabaseConnection() {
+    public DatabaseService() {
         // Instantiate database connection information.
         this.databaseHost = System.getenv("DATABASE_HOST");
         this.databasePort = System.getenv("DATABASE_PORT");
@@ -41,13 +43,6 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            instance = new DatabaseConnection();
-        }
-        return instance;
     }
 
     public DSLContext getDslContext() {
