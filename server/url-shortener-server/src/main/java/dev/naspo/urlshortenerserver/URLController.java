@@ -3,15 +3,15 @@ package dev.naspo.urlshortenerserver;
 import dev.naspo.urlshortenerserver.database.DatabaseService;
 import static dev.naspo.urlshortenerserver.database.generated.Tables.*;
 
-import jakarta.annotation.PostConstruct;
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.Record1;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 // Handles requests to "/urls"
 @RestController
@@ -29,7 +29,14 @@ public class URLController {
     // Get original url from token
     @GetMapping("/{token}")
     public String getOriginalURL(@PathVariable("token") String token) {
-        Result<Record> result = databaseService.getDslContext().select().from(URLS).fetch();
+        Record1<String> result = db.select(URLS.ORIGINAL_URL)
+                .from(URLS).where(URLS.TOKEN.eq(token)).fetchOne();
+
+        if (result != null) {
+            return result.get(URLS.ORIGINAL_URL);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
