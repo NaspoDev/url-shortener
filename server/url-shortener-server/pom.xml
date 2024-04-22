@@ -140,7 +140,7 @@
 							<packageName>dev.naspo.urlshortenerserver.database.generated</packageName>
 
 							<!-- The destination directory of your generated classes. Using Maven directory layout here -->
-							<directory>src/main/java/dev/naspo/urlshortenerserver/</directory>
+							<directory>src/main/java</directory>
 						</target>
 					</generator>
 				</configuration>
