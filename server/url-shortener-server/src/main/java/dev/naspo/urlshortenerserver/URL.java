@@ -7,7 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 // URL Data class
 public class URL {
     @org.hibernate.validator.constraints.URL
-    private String originalURL;
+    private String originalUrl;
     private int databaseId; // auto_increment mysql database id.
     private String token; // the unique token that will route to the original URL.
 

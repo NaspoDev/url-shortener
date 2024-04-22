@@ -7,10 +7,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 // Handles requests to "/urls"
@@ -20,10 +17,16 @@ public class URLController {
 
     private DatabaseService databaseService;
     private DSLContext db;
+    private int lastDatabaseId;
 
     public URLController(@Autowired DatabaseService databaseService) {
         this.databaseService = databaseService;
         this.db = databaseService.getDslContext();
+    }
+
+    // TODO: get the last database id.
+    private int getLastDatabaseId() {
+
     }
 
     // Get original url from token
@@ -39,4 +42,11 @@ public class URLController {
         }
     }
 
+    // Create a new shortened url
+    @PostMapping("")
+    public String createShortenedURL(@RequestBody URL url) {
+        // TODO: write logic...
+        // Also see if JSON deserializer works properly. See if
+        // it creates a URL object with just the expected originalUrl param.
+    }
 }
