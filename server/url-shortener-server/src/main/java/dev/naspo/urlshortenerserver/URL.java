@@ -8,14 +8,11 @@ import org.springframework.web.server.ResponseStatusException;
 // URL Data class
 public class URL {
     @org.hibernate.validator.constraints.URL
-    @NotNull
     private String originalUrl;
-
-    // These are to be set after creation.
-    private Integer databaseId; // auto_increment mysql database id.
+    private int databaseId; // auto_increment mysql database id.
     private String token; // the unique token that will route to the original URL.
-    private String shortenedUrl;
 
+    private String shortenedUrl; // the full shortened url
     // token gets appended to this in getShortenedUrl() method.
     private final String BASE_URL = "https://lnk.naspoapps.com/";
     private final int MAX_TOKEN_LENGTH = 5; // Max token length of 5.
@@ -24,17 +21,16 @@ public class URL {
     public URL() {
     }
 
-    public URL(String originalURL) {
+    public URL(String originalURL, int databaseId) {
+        this.originalUrl = originalURL;
+        this.databaseId = databaseId;
+        this.token = generateToken(); // generate token upon construction.
+        this.shortenedUrl = BASE_URL + token; // set the shortenedUrl variable
     }
 
     // Converts the URL's auto_increment database id into base-62.
     // Because it is based on the auto_increment id, it will be unique every time.
     public String generateToken() {
-        // There must be a database id in order to generate the token.
-        if (databaseId == null) {
-            return null;
-        }
-
         String base62Value = Base62Converter.convertToBase62(databaseId);
 
         // Validates that it's not greater than the MAX_TOKEN_LENGTH characters long.
@@ -43,7 +39,6 @@ public class URL {
         } else {
             // sets and returns the generated token
             token = base62Value;
-            shortenedUrl = BASE_URL + token; // also sets the shortenedUrl variable
             return base62Value;
         }
     }
@@ -56,15 +51,11 @@ public class URL {
         return token;
     }
 
-    public void setDatabaseId(int id) {
-        this.databaseId = id;
-    }
-
     public int getDatabaseId() {
         return databaseId;
     }
 
     public String getShortenedUrl() {
-        return BASE_URL + token;
+        return shortenedUrl;
     }
 }

@@ -39,25 +39,25 @@ public class URLController {
 
     // Create a new shortened url
     @PostMapping("")
-    public URL createShortenedURL(@RequestBody URL url) {
+    public URL createShortenedURL(@RequestBody String originalURL) {
         // Create new record in DB
         db.insertInto(URLS, URLS.ORIGINAL_URL)
-                .values(url.getOriginalUrl())
+                .values(originalURL)
                 .execute();
 
         // Get the database id now that it has been inserted.
         Result<Record1<Integer>> databaseIdResult = db.select(URLS.ID)
                 .from(URLS)
-                .where(URLS.ORIGINAL_URL.eq(url.getOriginalUrl()))
+                .where(URLS.ORIGINAL_URL.eq(originalURL))
                 .fetch();
 
-        // set the database id and generate a token
-        url.setDatabaseId(databaseIdResult.getLast().value1());
-        String token = url.generateToken();
+        // set the database id and create the URL object
+        int databaseId = databaseIdResult.getLast().value1();
+        URL url = new URL(originalURL, databaseId);
 
         // update the url record in the database with the token
         db.update(URLS)
-                .set(URLS.TOKEN, token)
+                .set(URLS.TOKEN, url.getToken())
                 .where(URLS.ORIGINAL_URL.eq(url.getOriginalUrl()))
                 .and(URLS.ID.eq(url.getDatabaseId()))
                 .execute();
