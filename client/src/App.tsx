@@ -2,9 +2,11 @@ import { FormEvent, useState } from "react";
 import "./css/App.css";
 import URLForm from "./components/url_form/URLForm";
 import ResultCard from "./components/result_display/ResultCard";
+import apiUrl from "./api";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
+  let shortenedUrl: string = "";
 
   return (
     <div className="App has-background-dark">
@@ -17,7 +19,7 @@ function App() {
       {!submitted ? (
         <URLForm handleFormSubmit={handleFormSubmit} />
       ) : (
-        <ResultCard />
+        <ResultCard shortenedUrl={shortenedUrl} />
       )}
     </div>
   );
@@ -37,7 +39,14 @@ function App() {
     // If its a valid URL, send it to the server.
     if (isValidURL(inputValue)) {
       setSubmitted(true);
-      // TODO: implement logic...
+
+      fetch(apiUrl + "/urls", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({originalUrl: inputValue})
+      });
     }
   }
 

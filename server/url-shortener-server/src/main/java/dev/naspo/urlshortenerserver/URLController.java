@@ -2,8 +2,6 @@ package dev.naspo.urlshortenerserver;
 
 import dev.naspo.urlshortenerserver.database.DatabaseService;
 import static dev.naspo.urlshortenerserver.database.generated.Tables.*;
-import static org.jooq.impl.DSL.max;
-import static org.jooq.impl.DSL.or;
 
 import org.jooq.DSLContext;
 import org.jooq.Record1;
@@ -20,7 +18,6 @@ public class URLController {
 
     private DatabaseService databaseService;
     private DSLContext db;
-    private final String baseUrl = "https://lnk.naspoapps.com"; // "/token" gets appended to this
 
     public URLController(@Autowired DatabaseService databaseService) {
         this.databaseService = databaseService;
@@ -49,13 +46,13 @@ public class URLController {
                 .execute();
 
         // Get the database id now that it has been inserted.
-        Result<Record1<Integer>> databaseId = db.select(URLS.ID)
+        Result<Record1<Integer>> databaseIdResult = db.select(URLS.ID)
                 .from(URLS)
                 .where(URLS.ORIGINAL_URL.eq(url.getOriginalUrl()))
                 .fetch();
 
         // set the database id and generate a token
-        url.setDatabaseId(databaseId.getLast().value1());
+        url.setDatabaseId(databaseIdResult.getLast().value1());
         String token = url.generateToken();
 
         // update the url record in the database with the token
@@ -65,7 +62,7 @@ public class URLController {
                 .and(URLS.ID.eq(url.getDatabaseId()))
                 .execute();
 
-        // Return the newly created URL object
+        // Return the shortened url
         return url;
     }
 }

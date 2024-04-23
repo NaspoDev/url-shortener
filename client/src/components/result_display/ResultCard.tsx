@@ -1,9 +1,15 @@
 import "../../css/ResultCard.css";
 
-interface Props {}
+interface Props {
+  shortenedUrl: string;
+}
 
-function ResultCard() {
-  return <div className="ResultDisplay"></div>;
+function ResultCard({ shortenedUrl }: Props) {
+  return (
+    <div className="ResultDisplay">
+      {shortenedUrl.length == 0 ? <p>Loading...</p> : <p>{shortenedUrl}</p>}
+    </div>
+  );
 }
 
 export default ResultCard;
