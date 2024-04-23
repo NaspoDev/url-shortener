@@ -2,9 +2,12 @@ package dev.naspo.urlshortenerserver;
 
 import dev.naspo.urlshortenerserver.database.DatabaseService;
 import static dev.naspo.urlshortenerserver.database.generated.Tables.*;
+import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.or;
 
 import org.jooq.DSLContext;
 import org.jooq.Record1;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +20,11 @@ public class URLController {
 
     private DatabaseService databaseService;
     private DSLContext db;
-    private int lastDatabaseId;
+    private final String baseUrl = "https://lnk.naspoapps.com"; // "/token" gets appended to this
 
     public URLController(@Autowired DatabaseService databaseService) {
         this.databaseService = databaseService;
         this.db = databaseService.getDslContext();
-    }
-
-    // TODO: get the last database id.
-    private int getLastDatabaseId() {
-
     }
 
     // Get original url from token
@@ -44,9 +42,30 @@ public class URLController {
 
     // Create a new shortened url
     @PostMapping("")
-    public String createShortenedURL(@RequestBody URL url) {
-        // TODO: write logic...
-        // Also see if JSON deserializer works properly. See if
-        // it creates a URL object with just the expected originalUrl param.
+    public URL createShortenedURL(@RequestBody URL url) {
+        // Create new record in DB
+        db.insertInto(URLS, URLS.ORIGINAL_URL)
+                .values(url.getOriginalUrl())
+                .execute();
+
+        // Get the database id now that it has been inserted.
+        Result<Record1<Integer>> databaseId = db.select(URLS.ID)
+                .from(URLS)
+                .where(URLS.ORIGINAL_URL.eq(url.getOriginalUrl()))
+                .fetch();
+
+        // set the database id and generate a token
+        url.setDatabaseId(databaseId.getLast().value1());
+        String token = url.generateToken();
+
+        // update the url record in the database with the token
+        db.update(URLS)
+                .set(URLS.TOKEN, token)
+                .where(URLS.ORIGINAL_URL.eq(url.getOriginalUrl()))
+                .and(URLS.ID.eq(url.getDatabaseId()))
+                .execute();
+
+        // Return the newly created URL object
+        return url;
     }
 }
