@@ -2,12 +2,18 @@ import "../../css/ResultCard.css";
 
 interface Props {
   shortenedUrl: string;
+  setSubmitted: React.Dispatch<React.SetStateAction<boolean>>; // a useState setter
 }
 
-function ResultCard({ shortenedUrl }: Props) {
+function ResultCard({ shortenedUrl, setSubmitted }: Props) {
   return (
     <div className="ResultDisplay">
-      {shortenedUrl.length == 0 ? <p>Loading...</p> : <p>{shortenedUrl}</p>}
+      {shortenedUrl.length == 0 ? (
+        
+        // Display loading
+        
+
+      ) : <p>{shortenedUrl}</p>}
     </div>
   );
 }

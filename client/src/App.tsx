@@ -6,7 +6,7 @@ import apiUrl from "./api";
 
 function App() {
   const [submitted, setSubmitted] = useState(false);
-  let shortenedUrl: string = "";
+  const [shortenedUrl, setShortenedUrl] = useState("");
 
   return (
     <div className="App has-background-dark">
@@ -19,13 +19,13 @@ function App() {
       {!submitted ? (
         <URLForm handleFormSubmit={handleFormSubmit} />
       ) : (
-        <ResultCard shortenedUrl={shortenedUrl} />
+        <ResultCard shortenedUrl={shortenedUrl} setSubmitted={setSubmitted} />
       )}
     </div>
   );
 
   // prettier-ignore
-  function handleFormSubmit(event: FormEvent, inputField: HTMLInputElement): void {
+  async function handleFormSubmit(event: FormEvent, inputField: HTMLInputElement): Promise<void> {
     // Prevent the form from refreshing the page on submit.
     event.preventDefault();
 
@@ -46,7 +46,9 @@ function App() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({originalUrl: inputValue})
-      });
+      })
+      .then(response => response.json())
+      .then((data) => setShortenedUrl(data.shortenedUrl))
     }
   }
 
