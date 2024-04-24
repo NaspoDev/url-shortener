@@ -1,4 +1,4 @@
-.App {
+.Home {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -6,11 +6,11 @@
   align-items: center;
   justify-content: flex-start;
 }
-.App .title-area {
+.Home .title-area {
   height: auto;
   margin-top: 200px;
   margin-bottom: 100px;
 }
-.App .title-area .title {
+.Home .title-area .title {
   padding-bottom: 10px;
 }
