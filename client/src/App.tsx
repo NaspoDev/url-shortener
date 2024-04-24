@@ -55,7 +55,10 @@ function App() {
         body: JSON.stringify({originalUrl: inputValue})
       })
       .then(response => response.json())
-      .then((data) => setShortenedUrl(data.shortenedUrl));
+      .then((data) => {
+        // trim the "https://" from the shortened link then display it.
+        setShortenedUrl(data.shortenedUrl.replace("https://", ""));
+      });
     } else {
       // if the entry is an invalid url, alert the user.
       setAlert(true);
