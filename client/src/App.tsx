@@ -59,7 +59,6 @@ function App() {
     } else {
       // if the entry is an invalid url, alert the user.
       setAlert(true);
-      // alert("Please enter a valid url!")
     }
   }
 
