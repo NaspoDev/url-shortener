@@ -7,6 +7,9 @@ import apiUrl from "./api";
 function App() {
   const [submitted, setSubmitted] = useState(false);
   const [shortenedUrl, setShortenedUrl] = useState("");
+  // Invalid url popup. Used in <URLForm />
+  // Activated when the user tries to shorten something that isn't a url.
+  const [isAlert, setAlert] = useState(false);
 
   return (
     <div className="App has-background-dark">
@@ -17,7 +20,11 @@ function App() {
 
       {/* If form is not submitted, display the form, otherwise display result */}
       {!submitted ? (
-        <URLForm handleFormSubmit={handleFormSubmit} />
+        <URLForm
+          handleFormSubmit={handleFormSubmit}
+          isAlert={isAlert}
+          setAlert={setAlert}
+        />
       ) : (
         <ResultCard shortenedUrl={shortenedUrl} setSubmitted={setSubmitted} />
       )}
@@ -28,8 +35,6 @@ function App() {
   async function handleFormSubmit(event: FormEvent, inputField: HTMLInputElement): Promise<void> {
     // Prevent the form from refreshing the page on submit.
     event.preventDefault();
-    setSubmitted(true); // FOR DEBUGGING REMOVE AFTER
-    setShortenedUrl("lnk.naspoapps.com/gd7A")
 
     const inputValue: string = inputField.value;
 
@@ -42,15 +47,19 @@ function App() {
     if (isValidURL(inputValue)) {
       setSubmitted(true);
 
-      // fetch(apiUrl + "/urls", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify({originalUrl: inputValue})
-      // })
-      // .then(response => response.json())
-      // .then((data) => setShortenedUrl(data.shortenedUrl));
+      fetch(apiUrl + "/urls", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({originalUrl: inputValue})
+      })
+      .then(response => response.json())
+      .then((data) => setShortenedUrl(data.shortenedUrl));
+    } else {
+      // if the entry is an invalid url, alert the user.
+      setAlert(true);
+      // alert("Please enter a valid url!")
     }
   }
 
