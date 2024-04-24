@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 // Handles requests to "/urls"
 @RestController
 @RequestMapping("/urls")
-@CrossOrigin(origins = "http://localhost:5173") // cors for development
 public class URLController {
 
     private DatabaseService databaseService;
