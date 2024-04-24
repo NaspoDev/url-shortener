@@ -31,7 +31,13 @@ function ResultCard({ shortenedUrl, setSubmitted }: Props) {
               >
                 {shortenedUrl}
               </a>
-              <button className="copy-button button is-primary">Copy</button>
+              <button
+                className="button is-primary"
+                id="copy-button"
+                onClick={copyToClipboard}
+              >
+                Copy
+              </button>
             </div>
           )}
         </div>
@@ -41,6 +47,11 @@ function ResultCard({ shortenedUrl, setSubmitted }: Props) {
       </button>
     </div>
   );
+
+  // Copy shortened url to clipboard.
+  function copyToClipboard(): void {
+    navigator.clipboard.writeText(shortenedUrl);
+  }
 }
 
 export default ResultCard;
