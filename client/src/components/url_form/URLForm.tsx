@@ -17,13 +17,13 @@ function URLForm({ handleFormSubmit }: Props) {
         );
       }}
     >
-      <label htmlFor="url-input" className="label">
+      <label htmlFor="url-input" className="label is-size-5">
         Long URL
       </label>
       <input
         type="text"
         id="url-input"
-        className="input"
+        className="input is-size-5"
         placeholder="Enter the url you want to shorten."
       />
       <button className="button is-primary" type="submit">

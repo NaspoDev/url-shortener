@@ -9,6 +9,7 @@
 .App .title-area {
   height: auto;
   margin-top: 200px;
+  margin-bottom: 100px;
 }
 .App .title-area .title {
   padding-bottom: 10px;

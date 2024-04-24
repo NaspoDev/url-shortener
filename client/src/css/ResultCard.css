@@ -1,0 +1,28 @@
+.ResultCard {
+  width: 500px;
+}
+.ResultCard .heading {
+  margin-bottom: 10px;
+}
+.ResultCard .card-content {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ResultCard .loading-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ResultCard .loading-container .loading-text {
+  padding-right: 30px;
+}
+.ResultCard .url-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

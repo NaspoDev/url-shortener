@@ -28,6 +28,8 @@ function App() {
   async function handleFormSubmit(event: FormEvent, inputField: HTMLInputElement): Promise<void> {
     // Prevent the form from refreshing the page on submit.
     event.preventDefault();
+    setSubmitted(true); // FOR DEBUGGING REMOVE AFTER
+    setShortenedUrl("lnk.naspoapps.com/gd7A")
 
     const inputValue: string = inputField.value;
 
@@ -40,15 +42,15 @@ function App() {
     if (isValidURL(inputValue)) {
       setSubmitted(true);
 
-      fetch(apiUrl + "/urls", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({originalUrl: inputValue})
-      })
-      .then(response => response.json())
-      .then((data) => setShortenedUrl(data.shortenedUrl))
+      // fetch(apiUrl + "/urls", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({originalUrl: inputValue})
+      // })
+      // .then(response => response.json())
+      // .then((data) => setShortenedUrl(data.shortenedUrl));
     }
   }
 
