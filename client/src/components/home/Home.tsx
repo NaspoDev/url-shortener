@@ -3,6 +3,7 @@ import URLForm from "../../components/url_form/URLForm";
 import ResultCard from "../../components/result_display/ResultCard";
 import apiUrl from "../../api";
 import "../../css/Home.css";
+import githubLogo from "../../assets/images/github_icon.png";
 
 function Home() {
   const [submitted, setSubmitted] = useState(false);
@@ -28,6 +29,19 @@ function Home() {
       ) : (
         <ResultCard shortenedUrl={shortenedUrl} setSubmitted={setSubmitted} />
       )}
+
+      <div className="developer-credit-container">
+        <a href="https://github.com/NaspoDev/url-shortener" target="_blank">
+          <img src={githubLogo} alt="GitHub Logo" />
+        </a>
+        <p>
+          Developed by{" "}
+          <a href="https://naspo.dev" target="_blank">
+            Naspo
+          </a>
+          .
+        </p>
+      </div>
     </div>
   );
 

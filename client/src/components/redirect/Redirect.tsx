@@ -18,8 +18,7 @@ function Redirect() {
       .then((response) => response.json())
       .then((data) => (originalUrl = data.originalUrl));
 
-    // window.location.href = originalUrl;
-    console.log(originalUrl);
+    window.location.href = originalUrl;
   }
 
   return null;
