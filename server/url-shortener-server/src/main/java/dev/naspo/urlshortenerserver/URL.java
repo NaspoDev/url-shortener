@@ -1,6 +1,7 @@
 package dev.naspo.urlshortenerserver;
 
 import dev.naspo.urlshortenerserver.utils.Base62Converter;
+import dev.naspo.urlshortenerserver.utils.GlobalVariables;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +15,7 @@ public class URL {
 
     private String shortenedUrl; // the full shortened url
     // token gets appended to this in getShortenedUrl() method.
-    private final String BASE_URL = "https://lnk.naspoapps.com/";
+    private final String BASE_URL = GlobalVariables.clientOrigin + "/";
     private final int MAX_TOKEN_LENGTH = 5; // Max token length of 5.
 
     // No-arg constructor for json deserializer.
