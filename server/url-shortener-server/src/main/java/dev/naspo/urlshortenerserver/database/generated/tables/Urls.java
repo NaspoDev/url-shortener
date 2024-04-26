@@ -63,7 +63,7 @@ public class Urls extends TableImpl<UrlsRecord> {
     /**
      * The column <code>url_shortener.urls.token</code>.
      */
-    public final TableField<UrlsRecord, String> TOKEN = createField(DSL.name("token"), SQLDataType.VARCHAR(5).nullable(false), this, "");
+    public final TableField<UrlsRecord, String> TOKEN = createField(DSL.name("token"), SQLDataType.VARCHAR(5), this, "");
 
     private Urls(Name alias, Table<UrlsRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

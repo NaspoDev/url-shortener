@@ -19,7 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
     // Global CORS configuration. Used for development.
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        if (System.getenv("RUN_ENV").equals(GlobalVariables.runEnvironmentDevelopment)) {
+        String runEnvironment = System.getenv("RUN_ENV");
+        if (runEnvironment != null && runEnvironment.equals(GlobalVariables.runEnvironmentDevelopment)) {
             registry.addMapping("/**")
                     .allowedOrigins("http://localhost:5173");
         }
