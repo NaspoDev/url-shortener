@@ -12,7 +12,7 @@ public class OriginValidationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // If in production, validate that the origin request header is the authorized client origin.
-        if (System.getenv("RUN_ENV").equals(GlobalVariables.runEnvironmentDevelopment)) {
+        if (System.getenv("RUN_ENV").equals(GlobalVariables.runEnvironmentProduction)) {
             if (request.getHeader("Origin") != null &&
                     request.getHeader("Origin").equals(GlobalVariables.clientOrigin)) {
                 return true;
