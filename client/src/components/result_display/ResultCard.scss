@@ -31,3 +31,18 @@
     justify-content: space-between;
   }
 }
+
+@media (max-width: 550px) {
+  .ResultCard {
+    width: 90%;
+
+    .card {
+      .card-content {
+        .loading-container .loading-text,
+        .url-container {
+          font-size: 18px !important;
+        }
+      }
+    }
+  }
+}

@@ -26,3 +26,13 @@
   align-items: center;
   justify-content: space-between;
 }
+
+@media (max-width: 550px) {
+  .ResultCard {
+    width: 90%;
+  }
+  .ResultCard .card .card-content .loading-container .loading-text,
+  .ResultCard .card .card-content .url-container {
+    font-size: 18px !important;
+  }
+}

@@ -7,3 +7,13 @@
     height: 80px;
   }
 }
+
+@media (max-width: 550px) {
+  .URLForm {
+    width: 90%;
+
+    #url-input::placeholder {
+      font-size: 18px;
+    }
+  }
+}
