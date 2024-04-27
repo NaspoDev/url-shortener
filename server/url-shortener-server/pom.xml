@@ -145,6 +145,22 @@
 					</generator>
 				</configuration>
 			</plugin>
+<!--		Maven surefire test plugin (specifying environment variables for smooth testing)-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<environmentVariables>
+						<DATABASE_HOST>${DATABASE_HOST}</DATABASE_HOST>
+						<DATABASE_PORT>${DATABASE_PORT}</DATABASE_PORT>
+						<DATABASE_USER>${DATABASE_USER}</DATABASE_USER>
+						<DATABASE_PASSWORD>${DATABASE_PASSWORD}</DATABASE_PASSWORD>
+						<DATABASE_NAME>${DATABASE_NAME}</DATABASE_NAME>
+						<DATABASE_RUN_ENV>${RUN_ENV}</DATABASE_RUN_ENV>
+					</environmentVariables>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
