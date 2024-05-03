@@ -11,7 +11,7 @@
 
 	<groupId>dev.naspo</groupId>
 	<artifactId>url-shortener-server</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>url-shortener-server</name>
 	<description>The backend for my URL Shortener project.</description>
 
