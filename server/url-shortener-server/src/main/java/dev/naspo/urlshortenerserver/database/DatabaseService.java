@@ -1,14 +1,11 @@
 package dev.naspo.urlshortenerserver.database;
 
-import jakarta.annotation.PreDestroy;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 // Handles database connection.
 @Service
@@ -23,8 +20,9 @@ public class DatabaseService {
     // What we use to establish the connection.
     private String databaseUrl;
 
-    private Connection conn; // Our database connection object.
-    private DSLContext dslContext; // Data
+    private DSLContext dslContext; // JOOQ MySQL domain specific language. (Interacting with db)
+    private HikariConfig hikariConfig; // Hikari db connection pool config.
+    private HikariDataSource dataSource; // Hikari db connection pool itself. (Uses hikari config)
 
     public DatabaseService() {
         // Instantiate database connection information.
@@ -35,21 +33,23 @@ public class DatabaseService {
         this.databaseName = System.getenv("DATABASE_NAME");
         this.databaseUrl = "jdbc:mysql://" + databaseHost + ":" + databasePort + "/" + databaseName;
 
-        // Establish the database connection and instantiate the cursor.
+        // Set up the connection pool
+        this.hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(databaseUrl);
+        hikariConfig.setUsername(databaseUser);
+        hikariConfig.setPassword(databasePassword);
+        this.dataSource = new HikariDataSource(hikariConfig);
+
+        // Establish the database connection and instantiate DSLContext.
         try {
-            conn = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword);
-            dslContext = DSL.using(conn, SQLDialect.MYSQL);
+            dslContext = DSL.using(dataSource, SQLDialect.MYSQL);
             System.out.println("Successfully connected to the database.");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public DSLContext getDslContext() {
         return dslContext;
-    }
-
-    public Connection getConnection() {
-        return conn;
     }
 }
