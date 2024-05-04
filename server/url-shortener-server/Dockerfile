@@ -2,6 +2,6 @@
 # so I have to use a trusted thrid-party.
 FROM eclipse-temurin:21
 WORKDIR /app
-COPY ./target/url-shortener-server-1.0.0.jar .
+COPY ./target/url-shortener-server-1.0.1.jar .
 EXPOSE 8080
-CMD ["java", "-jar", "url-shortener-server-1.0.0.jar"]
+CMD ["java", "-jar", "url-shortener-server-1.0.1.jar"]
