@@ -16,11 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/urls")
 public class URLController {
 
-    private DatabaseService databaseService;
     private DSLContext db;
 
     public URLController(@Autowired DatabaseService databaseService) {
-        this.databaseService = databaseService;
         this.db = databaseService.getDslContext();
     }
 
