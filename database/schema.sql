@@ -1,10 +1,9 @@
 -- URL Shortener database schema.
 
-DROP TABLE IF EXISTS `urls`;
-
 CREATE TABLE `urls` (
-  id int NOT NULL AUTO_INCREMENT,
-  original_url varchar(2048) NOT NULL,
-  token varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  id INT NOT NULL AUTO_INCREMENT,
+  original_url VARCHAR(2048) NOT NULL,
+  -- 'COLLATE utf8mb4_bin' enforces case sensitivity for 'token' values.
+  token VARCHAR(5) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (id)
 );
