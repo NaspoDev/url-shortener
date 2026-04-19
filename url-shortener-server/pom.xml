@@ -54,7 +54,7 @@
 			<artifactId>jooq-codegen</artifactId>
 			<version>3.19.7</version>
 		</dependency>
-	<!--	Hikari Connection  for JOOQ	-->
+	<!--	Hikari Connection for JOOQ	-->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
